@@ -30,6 +30,8 @@ cp src/doom_tiny_usb_ILI9225_220_176.uf2 /Volumes/RPI-RP2/
 picotool load -v -t bin doom1.whx -o 0x10042000
 ```
 
+A pre-built UF2 is provided, but you'll still need to upload the .whx file as shown above.
+
 
 ![](https://i.imgur.com/QxaZdQg.jpeg)
 
