@@ -1,4 +1,4 @@
-# RP2040 Doom, now for I2C and SPI displays!
+# RP2040 Doom on a Jack-o'-Lantern
 
 This is a fork of rsheldiii's rp2040-doom-LCD ("keycap Doom"), in turn derived from kilograham's rp2040-doom and so forth:
 
