@@ -1,5 +1,29 @@
 # RP2040 Doom, now for I2C and SPI displays!
 
+This is a fork of rsheldiii's rp2040-doom-LCD ("keycap Doom"), in turn derived from kilograham's rp2040-doom and so forth:
+https://github.com/rsheldiii/rp2040-doom-LCD
+https://github.com/kilograham/rp2040-doom
+This adds support for 8-bit parallel ILI9225, as used in the "Jabberin' Jack" animated jack-o'-lantern.
+Control pins are currently hardcoded to GPIO0-12, see src/pico_ili9225/src/ili9225.c
+TFT-writing code is adapted from GFX_Library_for_Arduino.
+https://github.com/moononournation/Arduino_GFX
+
+THIS CURRENTLY JUST RUNS THE DEMO LOOP. In theory, USB keyboard input should be possible, but a few vital lines were commented out to get this through the linker.
+
+Requires Pico SDK, picotool and other prerequisites (see original docs below).
+
+To build:
+```bash
+./build.sh
+cd rp2040-build
+make -j8 doom_tiny_usb_ILI9225_220_176
+(put board in bootloader mode - hold boot during reset or connecting USB)
+(for Mac:)
+cp src/doom_tiny_usb_ILI9225_220_176.uf2 /Volumes/RPI-RP2/
+(put board in bootloader mode again)
+picotool load -v -t bin doom1.whx -o 0x10042000```
+
+
 ![](https://i.imgur.com/QxaZdQg.jpeg)
 
 [youtube short here](https://www.youtube.com/shorts/YlykSvr83Jc)

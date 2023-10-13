@@ -9,6 +9,10 @@
 #include "screens/st7789_240_135.h"
 #endif
 
+#if ILI9225_220_176
+#include "screens/ili9225_220_176.h"
+#endif
+
 #if SSD1306_70_40
 #include "screens/ssd1306_70_40.hpp"
 #endif
@@ -30,8 +34,10 @@ static void* ssd1306_70_40;
 void I_initScreen(void) {
     gpio_init(PICO_DEFAULT_LED_PIN);
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
-
-#if ST7789_240_135
+    gpio_put(PICO_DEFAULT_LED_PIN, 1);
+#if ILI9225_220_176
+    ili9225_220_176_initScreen();
+#elif ST7789_240_135
     st7789_240_135_initScreen();
 #elif LILYGO_TTGO
     lilygo_ttgo_initScreen();
@@ -43,11 +49,14 @@ void I_initScreen(void) {
 #elif ST7735_128_128
     st7735_128_128_initScreen();
 #endif
+    gpio_put(PICO_DEFAULT_LED_PIN, 0);
 }
 
 void I_handleFrameStart(uint8_t frame) {
-    gpio_put(PICO_DEFAULT_LED_PIN, 0);
-#if ST7789_240_135
+    gpio_put(PICO_DEFAULT_LED_PIN, 1);
+#if ILI9225_220_176
+    ili9225_220_176_handleFrameStart(frame);
+#elif ST7789_240_135
     st7789_240_135_handleFrameStart(frame);
 #elif LILYGO_TTGO
     lilygo_ttgo_handleFrameStart(frame);
@@ -62,7 +71,10 @@ void I_handleFrameStart(uint8_t frame) {
 }
 
 void I_handleScanline(uint16_t *line, int scanline) {
-#if ST7789_240_135
+    gpio_put(PICO_DEFAULT_LED_PIN, (scanline >> 7) & 1);
+#if ILI9225_220_176
+    ili9225_220_176_handleScanline(line, scanline);
+#elif ST7789_240_135
     st7789_240_135_handleScanline(line, scanline);
 #elif LILYGO_TTGO
     lilygo_ttgo_handleScanline(line, scanline);
@@ -81,5 +93,5 @@ void I_handleFrameEnd(uint8_t frame) {
 #elif SSD1306_70_40_i2c
     ssd1306_70_40_i2c_handleFrameEnd(frame);
 #endif
-    gpio_put(PICO_DEFAULT_LED_PIN, 1);
+    gpio_put(PICO_DEFAULT_LED_PIN, 0);
 }

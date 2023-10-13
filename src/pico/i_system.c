@@ -480,7 +480,7 @@ void __attribute((noreturn)) I_Quit (void)
         I_GetEventTimeout(1000);
 #if USB_SUPPORT
         extern void tuh_task();
-        tuh_task();
+//        tuh_task();
 #endif
 #endif
         I_UpdateSound();

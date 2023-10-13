@@ -547,7 +547,7 @@ void D_DoomLoop (void)
     printf("Sleeping 2s for USB devices\n"); // TinyUSB still grinds to a halt during connect/disconnect
     absolute_time_t end_time = make_timeout_time_ms(2000);
     do {
-        tuh_task();
+//        tuh_task();
     } while (!time_reached(end_time));
 #endif
     EnableLoadingDisk();

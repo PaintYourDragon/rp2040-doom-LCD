@@ -9,6 +9,7 @@ endif()
 add_subdirectory(adpcm-xq)
 
 # screens
+add_subdirectory(pico_ili9225)
 add_subdirectory(pico_st7789)
 add_subdirectory(pico_ssd1306)
 add_subdirectory(pico_ssd1306_i2c)
@@ -590,6 +591,7 @@ function(add_doom_tiny SUFFIX SCREEN)
     if (PICO_ON_DEVICE)
         # target_link_libraries(doom_tiny${SUFFIX} PRIVATE hardware_spi)
         # TODO use defs or targets for these?
+        target_link_libraries(doom_tiny${SUFFIX} PRIVATE pico_ili9225)
         target_link_libraries(doom_tiny${SUFFIX} PRIVATE pico_st7789 hardware_spi)
         target_link_libraries(doom_tiny${SUFFIX} PRIVATE pico_ssd1306)
         target_link_libraries(doom_tiny${SUFFIX} PRIVATE pico_ssd1306_i2c hardware_i2c)
@@ -714,6 +716,11 @@ target_compile_definitions(doom_tiny_usb_LILYGO_TTGO PRIVATE
 add_doom_tiny_screen("ST7789_240_135")
 target_compile_definitions(doom_tiny_usb_ST7789_240_135 PRIVATE
     DOWNSAMPLING_FACTOR_OUT_OF_100=148
+)
+
+add_doom_tiny_screen("ILI9225_220_176")
+target_compile_definitions(doom_tiny_usb_ILI9225_220_176 PRIVATE
+    DOWNSAMPLING_FACTOR_OUT_OF_100=145
 )
 
 add_doom_tiny_screen("ST7735_128_128")
